@@ -369,7 +369,7 @@ footer {
 /* ===== FAQ (versión renovada) ===== */
 .faq-section {
   padding: 84px 0;
-  background: linear-gradient(180deg, #fdf8f3 0%, #fbf3ec 100%);
+  background: #fcf6ef;
 }
 .faq-layout {
   display: grid;
