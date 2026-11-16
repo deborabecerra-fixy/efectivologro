@@ -1,4 +1,4 @@
-/* Meta Pixel de EfectivoLogro (ID 2122901484986797).
+/* Meta Pixel de EfectivoLogro (ID 1843663539274028).
    - Se carga una sola vez por página, aunque el script se incluya dos veces.
    - No se activa hasta que la persona acepta las cookies de medición.
    - Solo envía PageView: sin datos personales, montos ni resultados del simulador.
@@ -7,7 +7,7 @@
   if (window.__elMetaPixel) return;
   window.__elMetaPixel = true;
 
-  var PIXEL_ID = '2122901484986797';
+  var PIXEL_ID = '1843663539274028';
   var KEY = 'el_consent_meta';
 
   function readConsent() {
