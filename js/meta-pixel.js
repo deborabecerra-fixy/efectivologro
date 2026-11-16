@@ -75,10 +75,8 @@
      Solo se envían si la persona aceptó (el píxel existe únicamente en ese caso).
      Nunca se envían montos, plazos, cuotas ni datos personales. */
   function track(kind, name, params, eventId) {
-    if (readConsent() !== 'granted' || typeof window.fbq !== 'function') return false;
-    if (eventId) window.fbq(kind, name, params || {}, { eventID: eventId });
-    else window.fbq(kind, name, params || {});
-    return true;
+    if (readConsent() !== 'granted' || typeof window.fbq !== 'function') return;
+    window.fbq(kind, name, params, { eventID: eventId });
   }
 
   /* Dónde está el botón: solo la sección, para saber qué llamado funciona */
@@ -99,16 +97,6 @@
   var CONTACT_RE = /^https:\/\/(linktr\.ee\/efectivologro|wa\.me\/|api\.whatsapp\.com\/|(www\.)?whatsapp\.com\/)/i;
   var lastFired = new WeakMap();
 
-  /* La combinación elegida se usa solo acá, para no repetir eventos; nunca se envía a Meta */
-  var simulated = new Set();
-  function simulationKey() {
-    var amount = document.querySelector('.amount-btn.active');
-    var plan = document.querySelector('.plan-btn.active');
-    return amount && plan ? amount.dataset.amount + '|' + plan.dataset.weeks : '';
-  }
-  var lastSimulation = null;
-  document.addEventListener('DOMContentLoaded', function () { lastSimulation = simulationKey(); });
-
   document.addEventListener('click', function (e) {
     var target = e.target instanceof Element ? e.target : null;
     if (!target) return;
@@ -128,17 +116,6 @@
       var eventId = 'c' + now.toString(36) + Math.random().toString(36).slice(2, 7);
       track('track', 'Contact', params, eventId);
       if (name) track('trackCustom', 'SeleccionSucursal', { sucursal: params.sucursal }, eventId);
-      return;
-    }
-
-    // SimulacionCredito: cada combinación nueva de monto + plan que la persona elige.
-    // Este listener corre después del simulador, así que los botones activos ya están actualizados.
-    if (target.closest('.amount-btn, .plan-btn')) {
-      var key = simulationKey();
-      if (!key || key === lastSimulation) return;       // clic sin cambio: no es una simulación nueva
-      lastSimulation = key;
-      if (simulated.has(key)) return;                    // misma combinación ya registrada en esta visita
-      if (track('trackCustom', 'SimulacionCredito')) simulated.add(key);
     }
   });
 
