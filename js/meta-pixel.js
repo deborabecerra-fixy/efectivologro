@@ -55,7 +55,7 @@
     box.setAttribute('aria-label', 'Preferencias de cookies');
     box.innerHTML =
       '<p>Usamos cookies de Meta para medir las visitas y mejorar nuestros anuncios. ' +
-      '<a href="privacidad.html">Más información</a></p>' +
+      '<a href="privacidad.html" target="_blank" rel="noopener">Más información</a></p>' +
       '<div class="el-consent-actions"><button type="button" class="no">Rechazar</button>' +
       '<button type="button" class="ok">Aceptar</button></div>';
     document.body.appendChild(box);
